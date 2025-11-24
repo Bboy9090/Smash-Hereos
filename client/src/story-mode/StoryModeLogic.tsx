@@ -11,7 +11,7 @@ import type { GLTF } from "three-stdlib";
  *
  * Sectors:
  * 1) The Awakening (Tutorial)
- * 2) The Collision (Green Hill x Hyrule)
+ * 2) The Fractured Crossing (open zone)
  * 3) The Corruption (Void Boss Arena)
  */
 export type ObjectiveStatus = "PENDING" | "COMPLETE";
@@ -25,8 +25,8 @@ export interface HeroConfig {
 }
 
 const DEFAULT_HERO: HeroConfig = {
-  id: "daddy",
-  name: "Daddy (Mario)",
+  id: "radiant-jumper",
+  name: "Radiant Jumper",
   color: "#fbbf24",
 };
 
@@ -56,8 +56,8 @@ export const useStoryStore = create<StoryState>((set) => ({
       let text = "";
 
       if (next === 2) {
-        name = "ACT II: THE COLLISION";
-        text = "Entering Green Hill x Hyrule Sector...";
+        name = "ACT II: THE FRACTURED CROSSING";
+        text = "Entering emerald ridge and sky-ruin sector...";
       }
 
       if (next === 3) {
@@ -154,7 +154,7 @@ const PlayerController = ({ playerRef, heroConfig = DEFAULT_HERO }: PlayerContro
     if (!playerRef.current) return;
 
     const speed = 12 * delta;
-    const gravity = -25; // units per second squared
+    const gravity = -25 * delta;
 
     const frontVector = new THREE.Vector3(
       0,
@@ -186,8 +186,9 @@ const PlayerController = ({ playerRef, heroConfig = DEFAULT_HERO }: PlayerContro
       setMovement((m) => ({ ...m, jump: false }));
     }
 
-    velocity.current.y += gravity;
-    playerRef.current.position.y += velocity.current.y * delta;
+    velocity.current.y += gravity * delta;
+    playerRef.current.position.y += velocity.current.y;
+
     if (playerRef.current.position.y <= 1) {
       playerRef.current.position.y = 1;
       velocity.current.y = 0;

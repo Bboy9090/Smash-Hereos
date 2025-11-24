@@ -4,7 +4,7 @@ This document maps the Story Mode architecture for a lightweight browser-first b
 
 ## Acts & Sectors
 - **Act I – The Awakening (Tutorial Sector):** Simple geometry and short traversal to teach movement.
-- **Act II – The Collision (Green Hill x Hyrule):** The first open zone that blends landmarks and rewards exploration.
+- **Act II – The Fractured Crossing (Open Zone):** The first open zone that blends emerald ridges with sky ruins and rewards exploration.
 - **Act III – The Corruption (Boss Arena):** Compact arena built for a single high-stakes encounter.
 
 ## Movement Logic (The Feel)
@@ -33,9 +33,9 @@ This document maps the Story Mode architecture for a lightweight browser-first b
 ```tsx
 <StoryModeLogic
   heroConfig={{
-    id: "jaxon",
-    name: "Jaxon (Sonic)",
-    glbUrl: "/assets/jaxon.glb", // replace with your CDN/local path
+    id: "blur",
+    name: "Cobalt Blur",
+    glbUrl: "/assets/cobalt-blur.glb", // replace with your CDN/local path
     scale: 0.8,
     color: "#38bdf8", // used for fallback capsule + outlines
   }}
