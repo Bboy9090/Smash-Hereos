@@ -154,7 +154,7 @@ const PlayerController = ({ playerRef, heroConfig = DEFAULT_HERO }: PlayerContro
     if (!playerRef.current) return;
 
     const speed = 12 * delta;
-    const gravity = -25 * delta;
+    const gravity = -25; // units per second squared
 
     const frontVector = new THREE.Vector3(
       0,
@@ -187,8 +187,7 @@ const PlayerController = ({ playerRef, heroConfig = DEFAULT_HERO }: PlayerContro
     }
 
     velocity.current.y += gravity * delta;
-    playerRef.current.position.y += velocity.current.y;
-
+    playerRef.current.position.y += velocity.current.y * delta;
     if (playerRef.current.position.y <= 1) {
       playerRef.current.position.y = 1;
       velocity.current.y = 0;
