@@ -16,7 +16,7 @@ Each act customizes mechanics, pacing, and presentation around this backbone.
 - **Act II — Year of No A-Listers (18 missions):** Stealth/survival, scavenging, weakened squads, Pikachu feral burst, DK rampage, rescue Mario.
 - **Act III — Unity’s Dawn (12 missions):** Mindscapes, illusion prisons, dual-character puzzles, Super Smash Brother fusion, Silver & Lunara awaken.
 - **Act IV — Great Hunt (8 missions):** Open zones, relic hunts, Yoshi prophecy rescue, Rift anomaly races, Mephiles ambushes.
-- **Act V — Primordial Gambit (10 missions):** Fortress sieges, multi-stage bosses, aerial strikes, Sonic controlled god-state, Bowser sacrifice.
+- **Act V — Primordial Gambit (10 missions):** Fortress sieges, multi-stage bosses, aerial strikes, Sonic-controlled god-state, Bowser sacrifice.
 - **Act VI — Shadows of the Void (8 missions):** Cosmic storms, realm traversal, Thunder God Pikachu trial, Dark Samus showdown, Celestial Choir vision.
 - **Act VII — Nexus Legacy (8 missions):** Adults/kids swaps, Bash Brothers spotlight, Lyra resonance trial, dual-generation finales.
 - **Act VIII — War of the Eternals (10 missions):** Multiverse Gauntlet brackets, divine rulesets, Harmonarch judgment, Hyper Sonic vs Void Echo.
