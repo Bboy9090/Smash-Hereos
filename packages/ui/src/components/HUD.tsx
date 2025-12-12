@@ -18,6 +18,7 @@ export const HUD: React.FC<HUDProps> = ({ player1, player2, timer }) => {
   };
 
   const getHealthPercentage = (health: number, maxHealth: number) => {
+    if (maxHealth <= 0) return 0;
     return Math.max(0, Math.min(100, (health / maxHealth) * 100));
   };
 
@@ -51,9 +52,9 @@ export const HUD: React.FC<HUDProps> = ({ player1, player2, timer }) => {
                 </div>
               </div>
               {/* Stock/Lives Display */}
-              {player1.stocks !== undefined && (
+              {player1.stocks !== undefined && player1.stocks > 0 && (
                 <div className="flex gap-1 mt-2">
-                  {Array.from({ length: player1.stocks }).map((_, i) => (
+                  {Array.from({ length: Math.min(player1.stocks, 10) }).map((_, i) => (
                     <div key={i} className="w-3 h-3 bg-blue-500 rounded-full" />
                   ))}
                 </div>
@@ -79,9 +80,9 @@ export const HUD: React.FC<HUDProps> = ({ player1, player2, timer }) => {
                 </div>
               </div>
               {/* Stock/Lives Display */}
-              {player2.stocks !== undefined && (
+              {player2.stocks !== undefined && player2.stocks > 0 && (
                 <div className="flex gap-1 mt-2 justify-end">
-                  {Array.from({ length: player2.stocks }).map((_, i) => (
+                  {Array.from({ length: Math.min(player2.stocks, 10) }).map((_, i) => (
                     <div key={i} className="w-3 h-3 bg-red-500 rounded-full" />
                   ))}
                 </div>

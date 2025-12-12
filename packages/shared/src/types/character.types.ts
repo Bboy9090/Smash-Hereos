@@ -134,10 +134,16 @@ export interface FighterConfig {
  * Simplified fighter data for UI display
  */
 export interface FighterDisplayState {
+  /** Character's display name */
   name: string;
+  /** Current health points (0 to maxHealth) */
   health: number;
+  /** Maximum health points */
   maxHealth: number;
+  /** Smash-style damage percentage (0% to 999%) */
   damage: number;
+  /** Number of remaining stocks/lives (optional, for stock matches) */
   stocks?: number;
+  /** Ultimate meter percentage (0-100, optional) */
   ultimateMeter?: number;
 }
