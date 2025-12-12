@@ -191,9 +191,8 @@ export class Kaxon extends BaseFighter {
    */
   public unleashChaosRift(): void {
     if (this.stats.ultimateMeter >= this.stats.ultimateCost && 
-        this.state !== FighterState.HITSTUN && 
-        this.state !== FighterState.STUNNED) {
-      this.stateMachine.transition(FighterState.ULTIMATE);
+        !this.stateMachine.isInState(FighterState.HITSTUN)) {
+      this.stateMachine.changeState(FighterState.ULTIMATE);
       this.stats.ultimateMeter = 0;
     }
   }

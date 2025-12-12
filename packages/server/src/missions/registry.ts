@@ -12,7 +12,7 @@ export const MISSION_REGISTRY: Mission[] = [
     chapter: 1,
     title: 'First Steps',
     description: 'Learn basic movement and controls',
-    type: MissionType.TUTORIAL,
+    type: MissionType.TRAINING,
     difficulty: MissionDifficulty.TUTORIAL,
     objectives: [
       { id: 'move', description: 'Move left and right', type: 'timing' },
@@ -28,7 +28,7 @@ export const MISSION_REGISTRY: Mission[] = [
     chapter: 1,
     title: 'Combat Basics',
     description: 'Master light and heavy attacks',
-    type: MissionType.TUTORIAL,
+    type: MissionType.TRAINING,
     difficulty: MissionDifficulty.TUTORIAL,
     objectives: [
       { id: 'light', description: 'Land 5 light attacks', type: 'combo', target: 5 },
@@ -78,7 +78,7 @@ export const MISSION_REGISTRY: Mission[] = [
     chapter: 2,
     title: 'Tag Team Training',
     description: 'Learn to switch between characters',
-    type: MissionType.TUTORIAL,
+    type: MissionType.TRAINING,
     difficulty: MissionDifficulty.EASY,
     objectives: [
       { id: 'switch', description: 'Switch characters 5 times', type: 'timing', target: 5 },
@@ -95,7 +95,7 @@ export const MISSION_REGISTRY: Mission[] = [
     chapter: 3,
     title: 'Synergy Surge',
     description: 'Build and activate synergy meter',
-    type: MissionType.TUTORIAL,
+    type: MissionType.TRAINING,
     difficulty: MissionDifficulty.NORMAL,
     objectives: [
       { id: 'build_synergy', description: 'Fill synergy meter to 100%', type: 'collect', target: 100 },

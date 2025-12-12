@@ -1,181 +1,169 @@
-import { AttackData, HitboxType } from '@smash-heroes/shared';
+import { MoveSet } from '@smash-heroes/shared';
+import { MoveSetBuilder } from '../../base/MoveSet';
 
 /**
  * Kaison (Fox) Move Set
  * A balanced fighter with quick attacks and momentum-based specials
  */
+export function createKaisonMoveSet(): MoveSet {
+  const builder = new MoveSetBuilder();
 
-export function createKaisonMoveSet() {
-  const attacks = new Map<string, AttackData>();
-  const specialMoves = new Map<string, AttackData>();
-  const aerialMoves = new Map<string, AttackData>();
+  // JAB COMBO
+  builder
+    .addAttack('jab', {
+      damage: 3,
+      baseKnockback: 10,
+      knockbackGrowth: 0.3,
+      knockbackAngle: 45,
+      hitlag: 3,
+      hitstun: 8,
+      startupFrames: 3,
+      activeFrames: 2,
+      recoveryFrames: 6,
+      nextMoves: ['jab_2'],
+    })
+    .addAttack('jab_2', {
+      damage: 4,
+      baseKnockback: 12,
+      knockbackGrowth: 0.4,
+      knockbackAngle: 50,
+      hitlag: 4,
+      hitstun: 10,
+      startupFrames: 2,
+      activeFrames: 3,
+      recoveryFrames: 8,
+      nextMoves: ['jab_3'],
+    })
+    .addAttack('jab_3', {
+      damage: 6,
+      baseKnockback: 30,
+      knockbackGrowth: 1.0,
+      knockbackAngle: 60,
+      hitlag: 6,
+      hitstun: 15,
+      startupFrames: 3,
+      activeFrames: 4,
+      recoveryFrames: 12,
+    });
 
-  // ========== LIGHT ATTACKS ==========
-  attacks.set('jab', {
-    name: 'Fox Jab',
-    damage: 3,
-    knockback: 2,
-    angle: 45,
-    hitstun: 8,
-    startup: 3,
-    active: 2,
-    recovery: 6,
-    hitboxType: HitboxType.GROUND,
-    canCancel: true,
-  });
+  // HEAVY ATTACKS
+  builder
+    .addAttack('heavy_forward', {
+      damage: 12,
+      baseKnockback: 40,
+      knockbackGrowth: 1.5,
+      knockbackAngle: 45,
+      hitlag: 8,
+      hitstun: 20,
+      startupFrames: 8,
+      activeFrames: 5,
+      recoveryFrames: 15,
+    })
+    .addAttack('heavy_up', {
+      damage: 14,
+      baseKnockback: 45,
+      knockbackGrowth: 1.8,
+      knockbackAngle: 80,
+      hitlag: 10,
+      hitstun: 22,
+      startupFrames: 10,
+      activeFrames: 6,
+      recoveryFrames: 18,
+    })
+    .addAttack('heavy_down', {
+      damage: 10,
+      baseKnockback: 35,
+      knockbackGrowth: 1.2,
+      knockbackAngle: 30,
+      hitlag: 6,
+      hitstun: 18,
+      startupFrames: 6,
+      activeFrames: 4,
+      recoveryFrames: 14,
+    });
 
-  attacks.set('jab_2', {
-    name: 'Fox Jab 2',
-    damage: 4,
-    knockback: 3,
-    angle: 50,
-    hitstun: 10,
-    startup: 2,
-    active: 3,
-    recovery: 8,
-    hitboxType: HitboxType.GROUND,
-    canCancel: true,
-  });
+  // AERIALS
+  builder
+    .addAerialMove('nair', {
+      damage: 8,
+      baseKnockback: 25,
+      knockbackGrowth: 0.6,
+      knockbackAngle: 45,
+      hitlag: 4,
+      hitstun: 12,
+      startupFrames: 4,
+      activeFrames: 6,
+      recoveryFrames: 10,
+    })
+    .addAerialMove('fair', {
+      damage: 10,
+      baseKnockback: 30,
+      knockbackGrowth: 1.0,
+      knockbackAngle: 40,
+      hitlag: 6,
+      hitstun: 15,
+      startupFrames: 6,
+      activeFrames: 4,
+      recoveryFrames: 12,
+    })
+    .addAerialMove('bair', {
+      damage: 11,
+      baseKnockback: 35,
+      knockbackGrowth: 1.2,
+      knockbackAngle: 135,
+      hitlag: 5,
+      hitstun: 16,
+      startupFrames: 5,
+      activeFrames: 5,
+      recoveryFrames: 14,
+    });
 
-  attacks.set('jab_3', {
-    name: 'Fox Jab 3 Finisher',
-    damage: 6,
-    knockback: 8,
-    angle: 60,
-    hitstun: 15,
-    startup: 3,
-    active: 4,
-    recovery: 12,
-    hitboxType: HitboxType.GROUND,
-  });
+  // SPECIALS
+  builder
+    .addSpecialMove('neutral_special', {
+      damage: 5,
+      baseKnockback: 5,
+      knockbackGrowth: 0.1,
+      knockbackAngle: 0,
+      hitlag: 2,
+      hitstun: 6,
+      startupFrames: 8,
+      activeFrames: 20,
+      recoveryFrames: 12,
+    })
+    .addSpecialMove('side_special', {
+      damage: 14,
+      baseKnockback: 40,
+      knockbackGrowth: 1.6,
+      knockbackAngle: 45,
+      hitlag: 8,
+      hitstun: 18,
+      startupFrames: 12,
+      activeFrames: 8,
+      recoveryFrames: 20,
+    })
+    .addSpecialMove('up_special', {
+      damage: 12,
+      baseKnockback: 35,
+      knockbackGrowth: 1.4,
+      knockbackAngle: 80,
+      hitlag: 6,
+      hitstun: 16,
+      startupFrames: 6,
+      activeFrames: 10,
+      recoveryFrames: 16,
+    })
+    .addSpecialMove('down_special', {
+      damage: 7,
+      baseKnockback: 20,
+      knockbackGrowth: 0.8,
+      knockbackAngle: 90,
+      hitlag: 4,
+      hitstun: 12,
+      startupFrames: 4,
+      activeFrames: 30,
+      recoveryFrames: 8,
+    });
 
-  // ========== HEAVY ATTACKS ==========
-  attacks.set('heavy_forward', {
-    name: 'Fox Tail Swipe',
-    damage: 12,
-    knockback: 15,
-    angle: 45,
-    hitstun: 20,
-    startup: 8,
-    active: 5,
-    recovery: 15,
-    hitboxType: HitboxType.GROUND,
-  });
-
-  attacks.set('heavy_up', {
-    name: 'Fox Upper Kick',
-    damage: 14,
-    knockback: 18,
-    angle: 80,
-    hitstun: 22,
-    startup: 10,
-    active: 6,
-    recovery: 18,
-    hitboxType: HitboxType.GROUND,
-  });
-
-  attacks.set('heavy_down', {
-    name: 'Fox Sweep',
-    damage: 10,
-    knockback: 12,
-    angle: 30,
-    hitstun: 18,
-    startup: 6,
-    active: 4,
-    recovery: 14,
-    hitboxType: HitboxType.GROUND,
-  });
-
-  // ========== AERIAL ATTACKS ==========
-  aerialMoves.set('nair', {
-    name: 'Fox Spin Kick',
-    damage: 8,
-    knockback: 6,
-    angle: 45,
-    hitstun: 12,
-    startup: 4,
-    active: 6,
-    recovery: 10,
-    hitboxType: HitboxType.AERIAL,
-  });
-
-  aerialMoves.set('fair', {
-    name: 'Fox Forward Claw',
-    damage: 10,
-    knockback: 10,
-    angle: 40,
-    hitstun: 15,
-    startup: 6,
-    active: 4,
-    recovery: 12,
-    hitboxType: HitboxType.AERIAL,
-  });
-
-  aerialMoves.set('bair', {
-    name: 'Fox Back Kick',
-    damage: 11,
-    knockback: 12,
-    angle: 135,
-    hitstun: 16,
-    startup: 5,
-    active: 5,
-    recovery: 14,
-    hitboxType: HitboxType.AERIAL,
-  });
-
-  // ========== SPECIAL MOVES ==========
-  specialMoves.set('neutral_special', {
-    name: 'Fox Blaster',
-    damage: 5,
-    knockback: 1,
-    angle: 0,
-    hitstun: 6,
-    startup: 8,
-    active: 20,
-    recovery: 12,
-    hitboxType: HitboxType.PROJECTILE,
-  });
-
-  specialMoves.set('side_special', {
-    name: 'Fox Dash',
-    damage: 14,
-    knockback: 16,
-    angle: 45,
-    hitstun: 18,
-    startup: 12,
-    active: 8,
-    recovery: 20,
-    hitboxType: HitboxType.GROUND,
-  });
-
-  specialMoves.set('up_special', {
-    name: 'Fox Fire',
-    damage: 12,
-    knockback: 14,
-    angle: 80,
-    hitstun: 16,
-    startup: 6,
-    active: 10,
-    recovery: 16,
-    hitboxType: HitboxType.AERIAL,
-  });
-
-  specialMoves.set('down_special', {
-    name: 'Fox Reflector',
-    damage: 7,
-    knockback: 8,
-    angle: 90,
-    hitstun: 12,
-    startup: 4,
-    active: 30,
-    recovery: 8,
-    hitboxType: HitboxType.COUNTER,
-  });
-
-  return {
-    attacks,
-    specialMoves,
-    aerialMoves,
-    grabs: new Map(),
-  };
+  return builder.build();
 }

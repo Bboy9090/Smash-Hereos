@@ -144,16 +144,16 @@ export class Jaxon extends BaseFighter {
    * Jaxon's signature move - Charged Spin Dash
    */
   public startSpinDash(): void {
-    if (this.state === FighterState.HITSTUN || this.state === FighterState.STUNNED) {
+    if (this.stateMachine.isInState(FighterState.HITSTUN) || this.stateMachine.isInState(FighterState.HITSTUN)) {
       return;
     }
 
-    this.stateMachine.transition(FighterState.SIDE_SPECIAL);
+    this.stateMachine.changeState(FighterState.SIDE_SPECIAL);
   }
 
   public releaseSpinDash(): void {
     if (this.state === FighterState.SIDE_SPECIAL) {
-      this.stateMachine.transition(FighterState.DASH);
+      this.stateMachine.changeState(FighterState.DASH);
     }
   }
 

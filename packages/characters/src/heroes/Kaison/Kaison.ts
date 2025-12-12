@@ -123,11 +123,11 @@ export class Kaison extends BaseFighter {
    * Kaison's signature move - Fox Dash with momentum
    */
   public foxDash(direction: 'left' | 'right'): void {
-    if (this.state === FighterState.HITSTUN || this.state === FighterState.STUNNED) {
+    if (this.stateMachine.isInState(FighterState.HITSTUN) || this.stateMachine.isInState(FighterState.HITSTUN)) {
       return;
     }
 
     this.facing = direction;
-    this.stateMachine.transition(FighterState.SIDE_SPECIAL);
+    this.stateMachine.changeState(FighterState.SIDE_SPECIAL);
   }
 }
