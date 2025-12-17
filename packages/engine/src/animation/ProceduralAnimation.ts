@@ -177,7 +177,7 @@ export class WeightShift {
 export class AttackAnimationPhase {
   private currentPhase: 'anticipation' | 'action' | 'follow-through' | 'recovery' = 'anticipation';
   private phaseTime: number = 0;
-  private totalTime: number = 0;
+  private phaseStartTime: number = 0;
 
   constructor(
     private anticipationDuration: number = 0.1,
@@ -188,62 +188,73 @@ export class AttackAnimationPhase {
 
   update(deltaTime: number): { phase: string; progress: number; intensity: number } {
     this.phaseTime += deltaTime;
-    this.totalTime += deltaTime;
 
     let phaseDuration = 0;
     let intensity = 0;
+    let progress = 0;
+
+    const totalDuration = this.anticipationDuration + this.actionDuration + 
+                          this.followThroughDuration + this.recoveryDuration;
 
     if (this.phaseTime < this.anticipationDuration) {
-      this.currentPhase = 'anticipation';
+      if (this.currentPhase !== 'anticipation') {
+        this.currentPhase = 'anticipation';
+        this.phaseStartTime = this.phaseTime;
+      }
       phaseDuration = this.anticipationDuration;
+      progress = this.phaseTime / phaseDuration;
       // Build up tension
-      intensity = (this.phaseTime / phaseDuration) * 0.3;
+      intensity = progress * 0.3;
     } else if (this.phaseTime < this.anticipationDuration + this.actionDuration) {
       if (this.currentPhase !== 'action') {
         this.currentPhase = 'action';
-        this.phaseTime = this.anticipationDuration;
+        this.phaseStartTime = this.phaseTime;
       }
       phaseDuration = this.actionDuration;
-      const actionProgress = (this.phaseTime - this.anticipationDuration) / phaseDuration;
+      progress = (this.phaseTime - this.anticipationDuration) / phaseDuration;
       // Peak intensity
       intensity = 1.0;
     } else if (this.phaseTime < this.anticipationDuration + this.actionDuration + this.followThroughDuration) {
       if (this.currentPhase !== 'follow-through') {
         this.currentPhase = 'follow-through';
-        this.phaseTime = this.anticipationDuration + this.actionDuration;
+        this.phaseStartTime = this.phaseTime;
       }
       phaseDuration = this.followThroughDuration;
-      const followProgress = (this.phaseTime - this.anticipationDuration - this.actionDuration) / phaseDuration;
+      progress = (this.phaseTime - this.anticipationDuration - this.actionDuration) / phaseDuration;
       // Decay intensity
-      intensity = 1.0 - followProgress * 0.7;
-    } else {
+      intensity = 1.0 - progress * 0.7;
+    } else if (this.phaseTime < totalDuration) {
       if (this.currentPhase !== 'recovery') {
         this.currentPhase = 'recovery';
-        this.phaseTime = this.anticipationDuration + this.actionDuration + this.followThroughDuration;
+        this.phaseStartTime = this.phaseTime;
       }
       phaseDuration = this.recoveryDuration;
-      const recoveryProgress = (this.phaseTime - this.anticipationDuration - this.actionDuration - this.followThroughDuration) / phaseDuration;
+      progress = (this.phaseTime - this.anticipationDuration - this.actionDuration - this.followThroughDuration) / phaseDuration;
       // Return to neutral
-      intensity = 0.3 * (1.0 - recoveryProgress);
+      intensity = 0.3 * (1.0 - progress);
+    } else {
+      // Animation complete
+      progress = 1.0;
+      intensity = 0;
     }
-
-    const progress = (this.phaseTime - (this.totalTime - phaseDuration)) / phaseDuration;
 
     return {
       phase: this.currentPhase,
-      progress: Math.min(1, progress),
+      progress: Math.min(1, Math.max(0, progress)),
       intensity,
     };
   }
 
   isComplete(): boolean {
-    return this.phaseTime >= (this.anticipationDuration + this.actionDuration + this.followThroughDuration + this.recoveryDuration);
+    const totalDuration = this.anticipationDuration + this.actionDuration + 
+                          this.followThroughDuration + this.recoveryDuration;
+    return this.phaseTime >= totalDuration;
   }
 
   reset(): void {
     this.currentPhase = 'anticipation';
     this.phaseTime = 0;
-    this.totalTime = 0;
+    this.phaseStartTime = 0;
   }
 
   getCurrentPhase(): string {

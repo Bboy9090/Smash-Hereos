@@ -178,8 +178,9 @@ export class EnhancedAnimationController {
     }
 
     // Find the two poses to interpolate between
-    let prevPose: AnimationPose = state.poses[0]!;
-    let nextPose: AnimationPose = state.poses[state.poses.length - 1]!;
+    // Safe to use non-null assertion here as we've verified poses.length > 0
+    let prevPose: AnimationPose = state.poses[0] as AnimationPose;
+    let nextPose: AnimationPose = state.poses[state.poses.length - 1] as AnimationPose;
 
     for (let i = 0; i < state.poses.length; i++) {
       const pose = state.poses[i];

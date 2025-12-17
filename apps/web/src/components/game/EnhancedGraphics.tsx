@@ -341,13 +341,14 @@ export function SpeedTrail({
 
   if (opacity < 0.1 || points.length < 2) return null;
 
+  // Note: linewidth is not widely supported in WebGL. For better cross-browser support,
+  // consider using a mesh-based line (e.g., THREE.TubeGeometry) or instanced meshes
   return (
     <line geometry={geometry}>
       <lineBasicMaterial
         color={color}
         transparent
         opacity={opacity}
-        linewidth={2}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
       />

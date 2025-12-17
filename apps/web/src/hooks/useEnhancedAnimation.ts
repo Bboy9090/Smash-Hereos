@@ -14,6 +14,26 @@ import {
   FootPlacement,
 } from '@smash-heroes/engine';
 
+// Animation constants for tuning
+const ANIMATION_CONSTANTS = {
+  HEAD_LOOK_STIFFNESS: 120,
+  HEAD_LOOK_DAMPING: 22,
+  WEIGHT_SHIFT_STIFFNESS: 150,
+  WEIGHT_SHIFT_DAMPING: 25,
+  SECONDARY_MOTION_CHAINS: 3,
+  SECONDARY_MOTION_STIFFNESS: 90,
+  SECONDARY_MOTION_DAMPING: 18,
+  BREATHING_RATE: 12, // breaths per minute
+  BREATHING_DEPTH: 1.0,
+  ATTACK_ANTICIPATION: 0.12,
+  ATTACK_ACTION: 0.18,
+  ATTACK_FOLLOW_THROUGH: 0.12,
+  ATTACK_RECOVERY: 0.18,
+  DEFAULT_HEAD_Y: 0.6,
+  DEFAULT_BODY_Y: 0.4,
+  DEFAULT_LEG_Y: -0.7,
+} as const;
+
 export interface AnimationRefs {
   body: React.RefObject<THREE.Group>;
   head: React.RefObject<THREE.Group>;
@@ -35,12 +55,22 @@ export interface AnimationState {
 }
 
 export function useEnhancedAnimation(refs: AnimationRefs) {
-  // Procedural animation systems
-  const breathingRef = useRef(new BreathingAnimation(12, 1.0));
-  const headLookAtRef = useRef(new HeadLookAt(120, 22));
+  // Procedural animation systems with named constants
+  const breathingRef = useRef(new BreathingAnimation(
+    ANIMATION_CONSTANTS.BREATHING_RATE, 
+    ANIMATION_CONSTANTS.BREATHING_DEPTH
+  ));
+  const headLookAtRef = useRef(new HeadLookAt(
+    ANIMATION_CONSTANTS.HEAD_LOOK_STIFFNESS, 
+    ANIMATION_CONSTANTS.HEAD_LOOK_DAMPING
+  ));
   const weightShiftRef = useRef(new WeightShift());
   const attackPhaseRef = useRef<AttackAnimationPhase | null>(null);
-  const secondaryMotionRef = useRef(new SecondaryMotion(3, 90, 18));
+  const secondaryMotionRef = useRef(new SecondaryMotion(
+    ANIMATION_CONSTANTS.SECONDARY_MOTION_CHAINS,
+    ANIMATION_CONSTANTS.SECONDARY_MOTION_STIFFNESS, 
+    ANIMATION_CONSTANTS.SECONDARY_MOTION_DAMPING
+  ));
   const footPlacementRef = useRef(new FootPlacement());
 
   // Animation state tracking
@@ -69,7 +99,12 @@ export function useEnhancedAnimation(refs: AnimationRefs) {
     // Check for state transitions
     if (isAttacking && !prevStateRef.current.isAttacking && attackType) {
       // Start new attack animation
-      attackPhaseRef.current = new AttackAnimationPhase(0.12, 0.18, 0.12, 0.18);
+      attackPhaseRef.current = new AttackAnimationPhase(
+        ANIMATION_CONSTANTS.ATTACK_ANTICIPATION,
+        ANIMATION_CONSTANTS.ATTACK_ACTION,
+        ANIMATION_CONSTANTS.ATTACK_FOLLOW_THROUGH,
+        ANIMATION_CONSTANTS.ATTACK_RECOVERY
+      );
     } else if (!isAttacking && prevStateRef.current.isAttacking) {
       // Attack ended
       attackPhaseRef.current = null;
@@ -104,7 +139,7 @@ export function useEnhancedAnimation(refs: AnimationRefs) {
 
       // Add subtle head bob during idle
       if (!isMoving && !isAttacking && !isJumping) {
-        refs.head.current.position.y = 0.6 + breathing.shoulderRise;
+        refs.head.current.position.y = ANIMATION_CONSTANTS.DEFAULT_HEAD_Y + breathing.shoulderRise;
       }
     }
 
@@ -114,14 +149,14 @@ export function useEnhancedAnimation(refs: AnimationRefs) {
 
       if (isMoving && !isAttacking) {
         // Walking/running body bob
-        refs.body.current.position.y = 0.4 + footPlacement.bodyBob;
+        refs.body.current.position.y = ANIMATION_CONSTANTS.DEFAULT_BODY_Y + footPlacement.bodyBob;
         
         // Body lean in direction of movement
         refs.body.current.rotation.z = weightShift.hipOffset;
         refs.body.current.rotation.y = -weightShift.shoulderOffset;
       } else if (!isAttacking && !isJumping) {
         // Idle breathing
-        refs.body.current.position.y = 0.4 + breathing.chestExpansion * 2;
+        refs.body.current.position.y = ANIMATION_CONSTANTS.DEFAULT_BODY_Y + breathing.chestExpansion * 2;
         refs.body.current.rotation.z = 0;
         refs.body.current.rotation.y = 0;
       }
@@ -181,10 +216,10 @@ function applyWalkingAnimation(
   if (refs.leftLeg.current && refs.rightLeg.current) {
     // Leg rotation and lift
     refs.leftLeg.current.rotation.x = leftFoot.forward * 1.2;
-    refs.leftLeg.current.position.y = -0.7 + leftFoot.lift;
+    refs.leftLeg.current.position.y = ANIMATION_CONSTANTS.DEFAULT_LEG_Y + leftFoot.lift;
     
     refs.rightLeg.current.rotation.x = rightFoot.forward * 1.2;
-    refs.rightLeg.current.position.y = -0.7 + rightFoot.lift;
+    refs.rightLeg.current.position.y = ANIMATION_CONSTANTS.DEFAULT_LEG_Y + rightFoot.lift;
   }
 }
 
@@ -236,8 +271,8 @@ function applyIdleAnimation(
     // Neutral stance
     refs.leftLeg.current.rotation.x = 0;
     refs.rightLeg.current.rotation.x = 0;
-    refs.leftLeg.current.position.y = -0.7;
-    refs.rightLeg.current.position.y = -0.7;
+    refs.leftLeg.current.position.y = ANIMATION_CONSTANTS.DEFAULT_LEG_Y;
+    refs.rightLeg.current.position.y = ANIMATION_CONSTANTS.DEFAULT_LEG_Y;
   }
 }
 
