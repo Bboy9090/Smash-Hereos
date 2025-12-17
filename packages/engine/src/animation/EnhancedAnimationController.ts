@@ -169,25 +169,28 @@ export class EnhancedAnimationController {
   private getPoseAtTime(state: AnimationState, time: number): AnimationPose {
     const normalizedTime = time / state.duration;
 
+    // Handle empty or malformed state
+    if (state.poses.length === 0) {
+      return {
+        time: 0,
+        transforms: {}
+      };
+    }
+
     // Find the two poses to interpolate between
-    let prevPose: AnimationPose | null = null;
-    let nextPose: AnimationPose | null = null;
+    let prevPose: AnimationPose = state.poses[0]!;
+    let nextPose: AnimationPose = state.poses[state.poses.length - 1]!;
 
     for (let i = 0; i < state.poses.length; i++) {
       const pose = state.poses[i];
-      if (pose.time <= normalizedTime) {
+      if (pose && pose.time <= normalizedTime) {
         prevPose = pose;
       }
-      if (pose.time >= normalizedTime && !nextPose) {
+      if (pose && pose.time >= normalizedTime) {
         nextPose = pose;
         break;
       }
     }
-
-    // If no previous pose, use first
-    if (!prevPose) prevPose = state.poses[0];
-    // If no next pose, use last
-    if (!nextPose) nextPose = state.poses[state.poses.length - 1];
 
     // If same pose, return it directly
     if (prevPose === nextPose) {

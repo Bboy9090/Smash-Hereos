@@ -268,7 +268,7 @@ export class SecondaryMotion {
 
   applyForce(force: number): void {
     // Apply force to first segment
-    if (this.springs.length > 0) {
+    if (this.springs.length > 0 && this.springs[0]) {
       this.springs[0].setTarget(force);
     }
   }
@@ -277,12 +277,16 @@ export class SecondaryMotion {
     const values: number[] = [];
     
     for (let i = 0; i < this.springs.length; i++) {
-      const value = this.springs[i].update(deltaTime);
+      const spring = this.springs[i];
+      if (!spring) continue;
+      
+      const value = spring.update(deltaTime);
       values.push(value);
       
       // Cascade to next segment
-      if (i < this.springs.length - 1) {
-        this.springs[i + 1].setTarget(value * 0.8);
+      const nextSpring = this.springs[i + 1];
+      if (i < this.springs.length - 1 && nextSpring) {
+        nextSpring.setTarget(value * 0.8);
       }
     }
     
@@ -291,8 +295,10 @@ export class SecondaryMotion {
 
   reset(): void {
     for (const spring of this.springs) {
-      spring.setValue(0);
-      spring.setTarget(0);
+      if (spring) {
+        spring.setValue(0);
+        spring.setTarget(0);
+      }
     }
   }
 }
