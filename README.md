@@ -97,6 +97,7 @@ smash-heroes/
 
 - **60 FPS Fixed Timestep**: Rock-solid game loop
 - **Momentum-Based Movement**: Spider-Man style fluid movement
+- **Variable Gravity Curves**: Snappy liftoff, floaty peak, weighted falls ✨ NEW
 - **Coyote Time**: Grace period after leaving platform (5 frames)
 - **Jump Buffering**: Remember jump inputs (6 frames)
 - **Variable Jump Height**: Hold for higher jumps
@@ -115,6 +116,7 @@ KB = f(damage%, attack_damage, weight, growth, base, rage)
 - **Dynamic Knockback**: Scales with damage
 - **DI (Directional Influence)**: Control knockback direction (±18°)
 - **Rage System**: More knockback at high damage (+15% max)
+- **Poise & Stagger System**: Light hits flinch, heavy hits launch ✨ NEW
 
 #### Arkham-Style Freeflow
 
@@ -123,6 +125,7 @@ KB = f(damage%, attack_damage, weight, growth, base, rage)
 - **Parry System**: 3 frame perfect parry (2x damage multiplier)
 - **Combo Multiplier**: Up to 2x damage at high combo count
 - **Rhythm-Based Flow**: Timing-based combo extensions
+- **Frame-Canceling**: Advanced combo system for skilled players ✨ NEW
 
 ### 🎮 Input System
 
@@ -140,7 +143,8 @@ Unified input handling for all platforms:
 - **Screen Shake**: Intensity scales with damage
 - **Slow Motion**: Dramatic slow-mo on big hits (30% speed)
 - **Particle System**: Hit sparks, explosions, trails
-- **Camera Effects**: Dynamic zoom and follow
+- **Visual Juice**: Dust clouds on dash, sparks on parry, movement trails ✨ NEW
+- **Dynamic Camera**: Zoom in for 1v1 tension, zoom out for chaos ✨ NEW
 
 ## 🥊 Character System
 
@@ -287,6 +291,48 @@ export class MyHero extends BaseFighter {
 - [Character Guide](docs/CHARACTER_GUIDE.md) - How to create new characters
 - [Combat System](docs/COMBAT_SYSTEM.md) - Deep dive into combat mechanics
 - [Getting Started](docs/GETTING_STARTED.md) - Detailed setup guide
+- **[Legendary Mechanics](docs/LEGENDARY_MECHANICS.md) - Advanced "legendary-tier" systems ✨ NEW**
+- **[Integration Example](docs/INTEGRATION_EXAMPLE.ts) - Complete usage examples ✨ NEW**
+
+## 🌟 Legendary-Tier Features
+
+We've implemented advanced mechanics inspired by the best fighting games:
+
+### The "Feelability" Protocol
+- **Variable Gravity Curves**: Snappy liftoff, floaty peak, weighted falls
+- **Frame-Canceling**: Advanced combo system with 5 cancel types
+- **Poise & Stagger**: Impact-based reactions (flinch → stagger → launch)
+- **Hit-Stop**: Already implemented (2-20 frames based on damage)
+- **Input Buffering**: Already implemented (6-frame window)
+- **Coyote Time**: Already implemented (5-frame grace period)
+
+### Visual Superiority
+- **Visual Juice System**: Secondary effects on every action
+  - Dust clouds on dashes
+  - Sparks on parries  
+  - Impact effects scaled by damage
+  - Movement trails for high-speed action
+- **Dynamic Camera**: The camera is a character
+  - Zoom in for tense 1v1 moments (up to 2.0x)
+  - Zoom out for chaotic multi-fighter brawls (down to 0.5x)
+  - Smooth interpolation and auto-framing
+
+### Tactical AI
+NPCs that actually think:
+- **Flanking**: Coordinate with allies to attack from multiple sides
+- **Retreat**: Fall back when health is low
+- **Punish**: Capitalize on player mistakes
+- **Difficulty Scaling**: Easy (50%) to Legendary (95% accuracy)
+- **Personalities**: Aggressive, Defensive, Balanced, Tactical
+
+### Narrative Integration
+- **Character Archetypes**: Life Path (1-9) + Zodiac Sign
+  - Example: Life Path 9 / Virgo = "Disciplined, analytical, devastatingly efficient"
+  - Combat modifiers affect speed, defense, precision, etc.
+  - Each archetype has unique strengths, weaknesses, and special mechanics
+- **Environmental Storytelling**: Character backstories integrated into gameplay
+
+See [LEGENDARY_MECHANICS.md](docs/LEGENDARY_MECHANICS.md) for complete details and usage examples.
 
 ## 🎯 Performance Targets
 
@@ -309,6 +355,16 @@ export class MyHero extends BaseFighter {
 - [x] Base fighter class
 - [x] Fighter state machine
 - [x] Striker character (complete moveset)
+- [x] Character archetype system ✨ NEW
+
+### Phase 2.5: Legendary-Tier Mechanics ✅ NEW
+- [x] Variable gravity curves
+- [x] Frame-canceling system
+- [x] Poise & stagger system
+- [x] Visual juice system
+- [x] Dynamic camera
+- [x] Tactical AI system
+- [x] Character archetypes (Life Path + Zodiac)
 
 ### Phase 3: UI & Apps (In Progress)
 - [ ] React UI components
