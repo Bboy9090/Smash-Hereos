@@ -3,9 +3,9 @@
 ## Step 0: One-Time Decisions
 
 ### Repo Strategy
-- One repo for the game: `ssgs-legacy-web`.
+- One repo for the game: `LEGENDS OF KAI-JAX: THE MEMORY HERO`.
 - Keep `engine` and `game logic` in this repo as structured.
-- If you later port to Unity, create another repo (`ssgs-legacy-unity`) and reuse mission/boss JSON.
+- If you later port to Unity, create another repo (`LEGENDS OF KAI-JAX: THE MEMORY HERO`) and reuse mission/boss JSON.
 
 ### Branch Strategy
 - `main`: Always stable (playable).
@@ -19,7 +19,7 @@
 ### Create the Project Board
 1. Go to repo → Projects → Create a New project.
 2. Choose Board.
-3. Name it: **SSGS Legacy — Mission Factory**
+3. Name it: **LEGENDS OF KAI-JAX: THE MEMORY HERO — Mission Factory**
 4. Add the following Status fields as columns:
     - `Backlog`
     - `Ready`
