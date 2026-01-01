@@ -38,10 +38,10 @@ const AeternaMainMenu = () => {
     {
       id: 'saga',
       title: 'SAGA MODE',
-      subtitle: 'The 9-Book Chronicle',
+      subtitle: 'Books 1-3: Genesis',
       icon: BookOpen,
       color: 'cyan',
-      description: 'Experience the birth of the Memory King across three cinematic movies.'
+      description: 'The Father\'s Fall. The Brothers\' Echo. The Convergence Crown.'
     },
     {
       id: 'gauntlet',
@@ -185,7 +185,7 @@ const AeternaMainMenu = () => {
 
           {/* Subtitle */}
           <p className="text-sm tracking-[0.5em] uppercase text-cyan-400 font-bold opacity-80">
-            Legends of the Memory King
+            Genesis: The Father's Fall
           </p>
 
           {/* Separator Line */}
