@@ -4,21 +4,31 @@
  * Handles all visual effects, particle systems, dread-based screen distortion,
  * and character aura rendering. Integrates with Three.js for 3D layers and
  * canvas for 2D overlays.
+ * 
+ * AETERNA COVENANT V1.3 UPDATE:
+ * - Anxious Attachment Logic: Dread increases when enemies are close
+ * - EventBus Integration: Emits VFX_GLITCH_INTENSE at 80%+ Dread
+ * - Proximity-based dread calculation (within 200 units = stress)
  */
 
 export class AuraEngine {
-  constructor(scene, camera, renderer) {
+  constructor(scene, camera, renderer, eventBus = null) {
     this.scene = scene;
     this.camera = camera;
     this.renderer = renderer;
+    this.eventBus = eventBus; // EventBus integration for AETERNA COVENANT
 
     // Effect pools
     this.particleSystems = [];
     this.activeAuras = [];
     this.screenEffects = [];
 
-    // Dread-based effects
+    // Dread-based effects (ANXIOUS ATTACHMENT LOGIC)
     this.dreadLevel = 0;
+    this.dreadThreshold = 80; // Triggers intense glitch at 80%+
+    this.dreadIncreaseRate = 2.5; // Per frame when enemies are close
+    this.dreadDecreaseRate = 1.0; // Per frame when safe
+    this.proximityThreshold = 200; // Distance in units for enemy proximity
     this.screenShakeIntensity = 0;
     this.chromaticAberration = 0;
     this.foVMultiplier = 1.0;
@@ -30,12 +40,41 @@ export class AuraEngine {
 
   /**
    * Update all visual effects based on game state
-   * @param {number} dreadLevel - Current dread meter (0-100)
+   * 
+   * AETERNA COVENANT V1.3: Anxious Attachment Logic
+   * - Dread increases when enemies are within proximityThreshold (200 units)
+   * - Dread decreases when enemies are far away (safe)
+   * - Emits VFX_GLITCH_INTENSE at 80%+ Dread
+   * 
+   * @param {number} enemyProximity - Distance to nearest enemy (null if none)
    * @param {Object} cameraTarget - Camera focus point
    * @param {number} deltaTime - Frame delta
    */
-  update(dreadLevel, cameraTarget, deltaTime) {
-    this.dreadLevel = dreadLevel;
+  update(enemyProximity, cameraTarget, deltaTime) {
+    // ANXIOUS ATTACHMENT: Calculate dread based on enemy proximity
+    if (enemyProximity !== null && enemyProximity < this.proximityThreshold) {
+      // Enemies are close - increase dread
+      this.dreadLevel = Math.min(100, this.dreadLevel + this.dreadIncreaseRate);
+    } else {
+      // Enemies are far or absent - decrease dread
+      this.dreadLevel = Math.max(0, this.dreadLevel - this.dreadDecreaseRate);
+    }
+
+    // Emit EventBus event if dread exceeds threshold
+    if (this.dreadLevel >= this.dreadThreshold && this.eventBus) {
+      this.eventBus.emit('VFX_GLITCH_INTENSE', { 
+        dreadLevel: this.dreadLevel,
+        intensity: (this.dreadLevel - this.dreadThreshold) / (100 - this.dreadThreshold)
+      });
+    }
+
+    // Emit dread update event
+    if (this.eventBus) {
+      this.eventBus.emit('dread:update', { 
+        intensity: this.dreadLevel / 100,
+        level: this.dreadLevel
+      });
+    }
 
     // Update screen effects based on dread
     this.updateScreenEffects();

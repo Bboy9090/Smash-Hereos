@@ -1,5 +1,5 @@
 /**
- * FEELABILITY PROTOCOL — Combat Polish & Juice
+ * FEELABILITY PROTOCOL — Combat Polish & Juice (AETERNA COVENANT V1.3)
  * 
  * Purpose: Make every interaction feel legendary and responsive
  * Pattern: Event-driven VFX/juice system
@@ -8,15 +8,15 @@
  * - Hit-Stop: Momentary freeze on impact (makes hits feel HEAVY)
  * - Screen Shake: Dynamic shake based on damage/weight
  * - Coyote Time: Forgiveness window for jumps (4 frames)
- * - Input Buffering: 6-frame window for combo extensions
+ * - Input Buffering: 8-frame window for combo extensions (LULU Protocol v7)
  * - Directional Influence (DI): Player agency even when launched
  * - Variable Gravity Curves: Snappy jumps, weighted falls
  * 
  * Mathematics:
  * - Hit-Stop frames = damage * 0.02 (capped at 30 frames)
  * - Screen Shake magnitude = knockback * weight * 0.01
- * - Coyote Time = 4 frames (6.67ms at 60fps)
- * - Input Buffer = 6 frames (100ms at 60fps)
+ * - Coyote Time = 4 frames (66.7ms at 60fps)
+ * - Input Buffer = 8 frames (133ms at 60fps) — UPDATED to match LULU Protocol v7
  * - Jump liftoff velocity = weight * 12 (heavier = slower jump arc)
  * - DI effectiveness = (inputQuality * resonance) / 100
  */
@@ -27,7 +27,7 @@ export interface FeelabilityConfig {
   hitStopEnabled: boolean;
   screenShakeEnabled: boolean;
   coyoteTimeFrames: number;
-  inputBufferFrames: number;
+  inputBufferFrames: number; // LULU Protocol v7: 8 frames
   diEnabled: boolean;
   particlesEnabled: boolean;
 }
@@ -61,7 +61,7 @@ class FeelabilityEngine {
       hitStopEnabled: true,
       screenShakeEnabled: true,
       coyoteTimeFrames: 4,
-      inputBufferFrames: 6,
+      inputBufferFrames: 8, // LULU Protocol v7: Updated from 6 to 8 frames
       diEnabled: true,
       particlesEnabled: true,
     };
